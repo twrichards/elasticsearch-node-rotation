@@ -8,6 +8,9 @@ export async function handler(event: StateMachineInput): Promise<OldestNodeRespo
     return new Promise<OldestNodeResponse>((resolve, reject) => {
         const asg: string = event.asgName;
         const arn: string = event.stepFunctionArn;
+
+        console.log(event);
+
         Promise.all([
             totalRunningExecutions(arn),
             getInstances(asg)
