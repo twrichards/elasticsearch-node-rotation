@@ -7,7 +7,7 @@ const s3 = new AWS.S3();
 
 export function ssmCommand(command: string, instanceId: string, outputExpected: boolean = true): Promise<string> {
     return new Promise<string>((resolve, reject) => {
-        sendCommand(command, instanceId)
+        sendCommand(`sleep 15; ${command}`, instanceId)
             .then((sendResult: SSM.Types.SendCommandResult) => wait(10000, sendResult.Command.CommandId))
             .then((commandId: string) => getCommandResult(commandId, instanceId))
             .then((result: SSM.Types.GetCommandInvocationResult) => {
